@@ -1,0 +1,41 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/pillsListFragment">
+
+    <fragment
+        android:id="@+id/pillsListFragment"
+        android:name="com.example.sdhtestproject.views.PillsListFragment"
+        android:label="PillsListFragment">
+        <action
+            android:id="@+id/action_pillsListFragment_to_pillsInfoFragment"
+            app:destination="@id/pillsInfoFragment" />
+        <action
+            android:id="@+id/action_pillsListFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pillsInfoFragment"
+        android:name="com.example.sdhtestproject.views.PillInfoFragment"
+        android:label="PillInfoFragment">
+        <argument
+            android:name="pillId"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.sdhtestproject.views.SearchFragment"
+        android:label="SearchFragment">
+        <action
+            android:id="@+id/action_searchFragment_to_pillsInfoFragment"
+            app:destination="@id/pillsInfoFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_pills_list_fragment"
+        app:destination="@+id/pillsListFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@+id/navigation_graph"
+        app:popUpToInclusive="true" />
+</navigation>
