@@ -3,7 +3,6 @@ package com.example.sdhtestproject.repositotys
 import android.annotation.SuppressLint
 import android.util.Log
 import com.example.sdhtestproject.db.PillsDao
-import com.example.sdhtestproject.models.Responce
 import com.example.sdhtestproject.models.Results
 import io.reactivex.Completable
 import io.reactivex.Observable

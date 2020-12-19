@@ -11,11 +11,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class PillsListPresenter : PillsListContract.Presenter {
-    val pillsRepository = PillsRepositoryProvider.providePillsRepository()
-    val daoRepository = PillsDaoRepositoryProvider.providePillsDaoRepository()
+    private val pillsRepository = PillsRepositoryProvider.providePillsRepository()
+    private val daoRepository = PillsDaoRepositoryProvider.providePillsDaoRepository()
 
     private var view: PillsListContract.View? = null
-    private var responce: Responce? = null
+    private var response: Response? = null
 
     @SuppressLint("CheckResult")
     override fun getListOfPills(hasInternetConnection: Boolean) {
@@ -23,12 +23,12 @@ class PillsListPresenter : PillsListContract.Presenter {
             pillsRepository.getPillsList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe({ resault ->
-                    view?.showListOfPills(resault.results)
-                    responce = resault
-                    view?.hasNextPage(resault.next != null)
-                    view?.hasPreviousPage(resault.previous != null)
-                    responce?.results?.forEach {
+                .subscribe({ result ->
+                    view?.showListOfPills(result.results)
+                    response = result
+                    view?.hasNextPage(result.next != null)
+                    view?.hasPreviousPage(result.previous != null)
+                    response?.results?.forEach {
                         daoRepository.insert(it)
                     }
                 }, { error ->
@@ -52,12 +52,12 @@ class PillsListPresenter : PillsListContract.Presenter {
     override fun getListOfPillsByPage(requestType: RequestType, hasInternetConnection: Boolean) {
         val page: String? = when (requestType) {
             RequestType.NEXT ->
-                responce?.next
+                response?.next
             RequestType.PREVIOUS ->
-                responce?.previous
+                response?.previous
         }
         if (page != null) {
-            if (page.equals(RetrofitUtils.BASE_URL + "v1/medicine/"))
+            if (page == RetrofitUtils.BASE_URL + "v1/medicine/")
                 getListOfPills(hasInternetConnection)
             else {
                 val pageNumber =
@@ -67,7 +67,7 @@ class PillsListPresenter : PillsListContract.Presenter {
                     .subscribeOn(Schedulers.io())
                     .subscribe({ resault ->
                         view?.showListOfPills(resault.results)
-                        responce = resault
+                        response = resault
                         view?.hasNextPage(resault.next != null)
                         view?.hasPreviousPage(resault.previous != null)
 

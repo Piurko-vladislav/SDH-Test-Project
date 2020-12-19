@@ -1,8 +1,8 @@
 package com.example.sdhtestproject.models
 
-class Manufacturer(
-    var id: Int?,
-    var name: String?,
-    var country: Country?
+data class Manufacturer(
+    val id: Int?,
+    val name: String?,
+    val country: Country?
 ) {
 }

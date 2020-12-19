@@ -1,13 +1,13 @@
 package com.example.sdhtestproject.models
 
-class Packaging(
-    var id: Int?,
-    var composition: Composition?,
-    var description: String?,
-    var inBulk: Boolean?,
-    var min_quantity: String?,
-    var package_quantity: String?,
-    var variant: Variant?
+data class Packaging(
+    val id: Int?,
+    val composition: Composition?,
+    val description: String?,
+    val inBulk: Boolean?,
+    val min_quantity: String?,
+    val package_quantity: String?,
+    val variant: Variant?
 ) {
 
 }

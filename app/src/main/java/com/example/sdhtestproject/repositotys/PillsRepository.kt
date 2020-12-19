@@ -1,20 +1,20 @@
 package com.example.sdhtestproject.repositotys
 
-import com.example.sdhtestproject.models.Responce
+import com.example.sdhtestproject.models.Response
 import com.example.sdhtestproject.models.Results
 import com.example.sdhtestproject.network.RetrofitServices
 import io.reactivex.Single
 
-class PillsRepository(val retrofitServices: RetrofitServices) {
+class PillsRepository(private val retrofitServices: RetrofitServices) {
 
-    fun getPillsList(): Single<Responce> {
+    fun getPillsList(): Single<Response> {
         return retrofitServices.getPillsList()
     }
-    fun getPillsListByPage(page:Int): Single<Responce> {
+    fun getPillsListByPage(page:Int): Single<Response> {
         return retrofitServices.getPillsListByPage(page)
     }
 
-    fun searchPills(title: String): Single<Responce>  {
+    fun searchPills(title: String): Single<Response>  {
         return retrofitServices.searchPills(title)
     }
 

@@ -1,8 +1,8 @@
 package com.example.sdhtestproject.models
 
-class Measure(
-    var name: String,
-    var iso: String
+data class Measure(
+    val name: String,
+    val iso: String
 ) {
 
 }

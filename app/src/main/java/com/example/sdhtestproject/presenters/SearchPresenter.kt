@@ -3,7 +3,6 @@ package com.example.sdhtestproject.presenters
 import android.annotation.SuppressLint
 import androidx.appcompat.widget.SearchView
 import com.example.sdhtestproject.contracts.SearchContract
-import com.example.sdhtestproject.models.Responce
 import com.example.sdhtestproject.repositotys.PillsRepositoryProvider
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
@@ -14,7 +13,7 @@ import java.util.concurrent.TimeUnit
 
 class SearchPresenter : SearchContract.Presenter {
 
-    var pillsRepository = PillsRepositoryProvider.providePillsRepository()
+    private val pillsRepository = PillsRepositoryProvider.providePillsRepository()
     private var view: SearchContract.View? = null
 
     @SuppressLint("CheckResult")

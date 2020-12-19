@@ -6,7 +6,7 @@ interface PillInfoContract {
 
     interface View {
 
-        fun showPillInfo(Results: Results)
+        fun showPillInfo(results: Results)
     }
 
     interface Presenter {

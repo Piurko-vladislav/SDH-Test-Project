@@ -1,9 +1,9 @@
 package com.example.sdhtestproject.models
 
-class PharmForm(
-    var id: Int?,
-    var name: String?,
-    var short_name: String?
+data class PharmForm(
+    val id: Int?,
+    val name: String?,
+    val short_name: String?
 ) {
 
 }

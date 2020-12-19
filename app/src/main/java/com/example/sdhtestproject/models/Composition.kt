@@ -1,13 +1,13 @@
 package com.example.sdhtestproject.models
 
-class Composition(
-    var id: Int?,
-    var discription: String?,
-    var act: List<String>?,
-    var inn: Inn?,
-    var pharm_form: PharmForm?,
-    var dosage: Double?,
-    var measure: Measure?
+data class Composition(
+    val id: Int?,
+    val discription: String?,
+    val act: List<String>?,
+    val inn: Inn?,
+    val pharm_form: PharmForm?,
+    val dosage: Double?,
+    val measure: Measure?
 ) {
 
 }

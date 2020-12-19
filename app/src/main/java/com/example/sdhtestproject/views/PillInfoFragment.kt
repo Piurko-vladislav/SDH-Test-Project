@@ -55,12 +55,12 @@ class PillInfoFragment : Fragment(R.layout.pill_info_fragment), PillInfoContract
     }
 
     override fun showPillInfo(results: Results) {
-        pillsInfoFragmentBinding!!.pillTradeLabel.setText(results.trade_label?.name)
-        pillsInfoFragmentBinding!!.pillManufacturerName.setText(results.manufacturer?.name)
-        pillsInfoFragmentBinding!!.pillPackagingDescription.setText(results.packaging?.description)
-        pillsInfoFragmentBinding!!.pillCompositionDescription.setText(results.composition?.discription)
-        pillsInfoFragmentBinding!!.pillCompositionInn.setText(results.composition?.inn?.name)
-        pillsInfoFragmentBinding!!.pillPharmForm.setText(results.composition?.pharm_form?.name)
+        pillsInfoFragmentBinding!!.pillTradeLabel.text = results.trade_label?.name
+        pillsInfoFragmentBinding!!.pillManufacturerName.text = results.manufacturer?.name
+        pillsInfoFragmentBinding!!.pillPackagingDescription.text = results.packaging?.description
+        pillsInfoFragmentBinding!!.pillCompositionDescription.text = results.composition?.discription
+        pillsInfoFragmentBinding!!.pillCompositionInn.text = results.composition?.inn?.name
+        pillsInfoFragmentBinding!!.pillPharmForm.text = results.composition?.pharm_form?.name
     }
 
     override fun onResume() {

@@ -1,10 +1,10 @@
 package com.example.sdhtestproject.models
 
-class Variant(
-    var id: Int,
-    var pharmForm: PharmForm,
-    var name: String,
-    var shortName: String
+data class Variant(
+    val id: Int,
+    val pharmForm: PharmForm,
+    val name: String,
+    val shortName: String
 ) {
 
 }
