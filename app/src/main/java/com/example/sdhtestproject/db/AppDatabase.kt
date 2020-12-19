@@ -1,14 +1,13 @@
 package com.example.sdhtestproject.db
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.example.sdhtestproject.models.DbResults
+import androidx.room.*
+import com.example.sdhtestproject.db.converters.ResultTypeConverter
 import com.example.sdhtestproject.models.Results
+import com.example.sdhtestproject.utils.DbUtils
 
-@Database(entities = arrayOf(DbResults::class), version = 1)
+@Database(entities = arrayOf(Results::class), version = DbUtils.version)
+@TypeConverters(ResultTypeConverter::class)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun pillsDao(): PillsDao
 
@@ -18,7 +17,7 @@ abstract class AppDatabase : RoomDatabase(){
         fun getAppDataBase(context: Context): AppDatabase? {
             if (INSTANCE == null){
                 synchronized(AppDatabase::class){
-                    INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "myDB").build()
+                    INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DbUtils.dbName).build()
                 }
             }
             return INSTANCE

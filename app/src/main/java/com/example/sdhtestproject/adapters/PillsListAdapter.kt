@@ -26,7 +26,7 @@ class PillsListAdapter(var listener: PillsAdapterListener) :
 
         val itemView = binding.root
 
-        return ViewHolder(itemView, binding)
+        return ViewHolder(itemView, binding, listener)
     }
 
     override fun getItemCount(): Int {
@@ -36,14 +36,10 @@ class PillsListAdapter(var listener: PillsAdapterListener) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.bind(pillsList)
-
-        holder.itemView.setOnClickListener {
-            listener.onPillClicked(holder.cardView, pillsList.get(holder.adapterPosition))
-        }
     }
 
 
-    class ViewHolder(itemView: View, binding: PillRecyclerItemBinding) :
+    class ViewHolder(itemView: View, binding: PillRecyclerItemBinding, private val listener: PillsAdapterListener) :
         RecyclerView.ViewHolder(itemView) {
 
         var cardView: MaterialCardView = binding.pillCardView
@@ -53,6 +49,10 @@ class PillsListAdapter(var listener: PillsAdapterListener) :
         fun bind(pillsList: List<Results>) {
             tradeLabel.setText(pillsList.get(adapterPosition).trade_label?.name)
             manufacturerName.setText(pillsList.get(adapterPosition).manufacturer?.name)
+
+            itemView.setOnClickListener {
+                listener.onPillClicked(cardView, pillsList.get(adapterPosition))
+            }
         }
     }
 

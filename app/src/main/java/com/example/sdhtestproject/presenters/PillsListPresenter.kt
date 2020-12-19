@@ -10,7 +10,7 @@ import com.example.sdhtestproject.utils.RetrofitUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class PillsListPresenter() : PillsListContract.Presenter {
+class PillsListPresenter : PillsListContract.Presenter {
     val pillsRepository = PillsRepositoryProvider.providePillsRepository()
     val daoRepository = PillsDaoRepositoryProvider.providePillsDaoRepository()
 
@@ -29,13 +29,7 @@ class PillsListPresenter() : PillsListContract.Presenter {
                     view?.hasNextPage(resault.next != null)
                     view?.hasPreviousPage(resault.previous != null)
                     responce?.results?.forEach {
-                        daoRepository.insert(DbResults(it.id,
-                            it.trade_label?.name,
-                            it.manufacturer?.name,
-                            it.packaging?.description,
-                            it.composition?.discription,
-                            it.composition?.inn?.name,
-                            it.composition?.pharm_form?.name))
+                        daoRepository.insert(it)
                     }
                 }, { error ->
                     error.printStackTrace()
@@ -46,33 +40,13 @@ class PillsListPresenter() : PillsListContract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({ resault ->
-                    view?.showListOfPills(dbResultsToResults(resault))
+                    view?.showListOfPills(resault)
                 }, { error ->
                     error.printStackTrace()
                 })
         }
     }
 
-    fun dbResultsToResults(dbResults: List<DbResults>): List<Results> {
-        val resultList = arrayListOf<Results>()
-        dbResults.forEach {
-            resultList.add(Results(it.id,
-                    Composition(null, it.db_composition_discription,null,
-                        Inn(null, it.db_composition_inn_name),
-                        PharmForm(null, it.db_composition_pharm_form_name, null),
-                        null, null
-                    ),
-                    Packaging(null, null, it.db_packaging_name,
-                        null, null, null, null),
-                    Trade_label(null,
-                        it.db_trade_label),
-                    Manufacturer(null, it.db_manufacturer_name, null),
-                null
-                )
-            )
-        }
-        return resultList
-    }
 
     @SuppressLint("CheckResult")
     override fun getListOfPillsByPage(requestType: RequestType, hasInternetConnection: Boolean) {

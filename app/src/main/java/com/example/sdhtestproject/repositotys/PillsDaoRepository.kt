@@ -3,7 +3,8 @@ package com.example.sdhtestproject.repositotys
 import android.annotation.SuppressLint
 import android.util.Log
 import com.example.sdhtestproject.db.PillsDao
-import com.example.sdhtestproject.models.DbResults
+import com.example.sdhtestproject.models.Responce
+import com.example.sdhtestproject.models.Results
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 class PillsDaoRepository(private val pillsDao: PillsDao) {
 
     @SuppressLint("CheckResult")
-    fun insert(results: DbResults){
+    fun insert(results: Results){
         pillsDao.insert(results)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -33,7 +34,7 @@ class PillsDaoRepository(private val pillsDao: PillsDao) {
             )
     }
 
-    fun getAllResults(): Observable<List<DbResults>> = pillsDao.getAllResults()
+    fun getAllResults(): Observable<List<Results>> = pillsDao.getAllResults()
 
-    fun getAllResultsById(id:Int): Observable<List<DbResults>> = pillsDao.getAllResults(id)
+    fun getAllResultsById(id:Int): Observable<List<Results>> = pillsDao.getAllResults(id)
 }
