@@ -3,7 +3,6 @@ package com.example.sdhtestproject.presenters
 import android.annotation.SuppressLint
 import androidx.appcompat.widget.SearchView
 import com.example.sdhtestproject.contracts.SearchContract
-import com.example.sdhtestproject.repositotys.PillsDaoRepository
 import com.example.sdhtestproject.repositotys.PillsRepository
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe

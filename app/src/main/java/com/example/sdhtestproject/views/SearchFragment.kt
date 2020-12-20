@@ -12,7 +12,6 @@ import com.example.sdhtestproject.contracts.SearchContract
 import com.example.sdhtestproject.databinding.SearchFragmentBinding
 import com.example.sdhtestproject.models.Results
 import com.example.sdhtestproject.presenters.SearchPresenter
-import com.example.sdhtestproject.repositotys.PillsDaoRepository
 import com.example.sdhtestproject.repositotys.PillsRepository
 import javax.inject.Inject
 
@@ -73,7 +72,7 @@ class SearchFragment : Fragment(R.layout.search_fragment), SearchContract.View,
 
     override fun onPillClicked(cardView: View, results: Results) {
         val directions =
-            SearchFragmentDirections.actionSearchFragmentToPillsInfoFragment(results.id!!)
+            SearchFragmentDirections.actionSearchFragmentToPillsInfoFragment(results.id)
         findNavController().navigate(directions)
     }
 

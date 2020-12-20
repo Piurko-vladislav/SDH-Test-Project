@@ -24,7 +24,4 @@ interface PillsDao {
 
     @Query("SELECT * FROM results WHERE id = :id")
     fun getAllResults(id:Int): Observable<List<Results>>
-
-    @Query("SELECT * FROM results WHERE  = :id")
-    fun getAllResultsByTitle(title: String): Observable<List<Results>>
 }
