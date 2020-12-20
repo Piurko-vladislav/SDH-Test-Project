@@ -2,15 +2,16 @@ package com.example.sdhtestproject.presenters
 
 import android.annotation.SuppressLint
 import com.example.sdhtestproject.contracts.PillInfoContract
-import com.example.sdhtestproject.repositotys.PillsDaoRepositoryProvider
-import com.example.sdhtestproject.repositotys.PillsRepositoryProvider
+import com.example.sdhtestproject.repositotys.PillsDaoRepository
+import com.example.sdhtestproject.repositotys.PillsRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class PillInfoPresenter() : PillInfoContract.Presenter {
+class PillInfoPresenter(
+    private val daoRepository: PillsDaoRepository,
+    private val pillsRepository: PillsRepository
+) : PillInfoContract.Presenter {
 
-    private val daoRepository = PillsDaoRepositoryProvider.providePillsDaoRepository()
-    private val pillsRepository = PillsRepositoryProvider.providePillsRepository()
     private var view: PillInfoContract.View? = null
 
     @SuppressLint("CheckResult")

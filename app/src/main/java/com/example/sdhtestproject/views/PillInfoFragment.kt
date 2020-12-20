@@ -11,13 +11,20 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sdhtestproject.R
+import com.example.sdhtestproject.app.MyApplication
 import com.example.sdhtestproject.contracts.PillInfoContract
 import com.example.sdhtestproject.databinding.PillInfoFragmentBinding
 import com.example.sdhtestproject.models.Results
 import com.example.sdhtestproject.presenters.PillInfoPresenter
+import com.example.sdhtestproject.repositotys.PillsDaoRepository
+import com.example.sdhtestproject.repositotys.PillsRepository
+import javax.inject.Inject
 
 
 class PillInfoFragment : Fragment(R.layout.pill_info_fragment), PillInfoContract.View {
+
+    @Inject lateinit var daoRepository: PillsDaoRepository
+    @Inject lateinit var pillsRepository: PillsRepository
 
     private lateinit var presenter : PillInfoContract.Presenter
 
@@ -27,11 +34,13 @@ class PillInfoFragment : Fragment(R.layout.pill_info_fragment), PillInfoContract
 
     private var pillId: Int? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MyApplication.component.inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         pillsInfoFragmentBinding = PillInfoFragmentBinding.inflate(inflater, container, false)
-
-        presenter = PillInfoPresenter()
 
         return pillsInfoFragmentBinding!!.root
     }
@@ -40,11 +49,10 @@ class PillInfoFragment : Fragment(R.layout.pill_info_fragment), PillInfoContract
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        presenter = PillInfoPresenter(daoRepository, pillsRepository)
         pillId = args.pillId
-
         presenter.getPillInfo(pillId, checkInternetConnection())
         initUI()
-
     }
 
 

@@ -3,16 +3,17 @@ package com.example.sdhtestproject.presenters
 import android.annotation.SuppressLint
 import com.example.sdhtestproject.contracts.PillsListContract
 import com.example.sdhtestproject.models.*
-import com.example.sdhtestproject.repositotys.PillsDaoRepositoryProvider
-import com.example.sdhtestproject.repositotys.PillsRepositoryProvider
+import com.example.sdhtestproject.repositotys.PillsDaoRepository
+import com.example.sdhtestproject.repositotys.PillsRepository
 import com.example.sdhtestproject.utils.RequestType
 import com.example.sdhtestproject.utils.RetrofitUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class PillsListPresenter : PillsListContract.Presenter {
-    private val pillsRepository = PillsRepositoryProvider.providePillsRepository()
-    private val daoRepository = PillsDaoRepositoryProvider.providePillsDaoRepository()
+class PillsListPresenter(
+    private val daoRepository: PillsDaoRepository,
+    private val pillsRepository: PillsRepository
+) : PillsListContract.Presenter {
 
     private var view: PillsListContract.View? = null
     private var response: Response? = null

@@ -7,18 +7,29 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sdhtestproject.R
 import com.example.sdhtestproject.adapters.PillsListAdapter
+import com.example.sdhtestproject.app.MyApplication
 import com.example.sdhtestproject.contracts.SearchContract
 import com.example.sdhtestproject.databinding.SearchFragmentBinding
 import com.example.sdhtestproject.models.Results
 import com.example.sdhtestproject.presenters.SearchPresenter
+import com.example.sdhtestproject.repositotys.PillsDaoRepository
+import com.example.sdhtestproject.repositotys.PillsRepository
+import javax.inject.Inject
 
 class SearchFragment : Fragment(R.layout.search_fragment), SearchContract.View,
     PillsListAdapter.PillsAdapterListener {
+
+    @Inject lateinit var pillsRepository: PillsRepository
 
     private lateinit var presenter: SearchContract.Presenter
     private var searchFragmentBinding: SearchFragmentBinding? = null
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var adapter: PillsListAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MyApplication.component.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,15 +42,13 @@ class SearchFragment : Fragment(R.layout.search_fragment), SearchContract.View,
         recyclerView.layoutManager = layoutManager
         adapter = PillsListAdapter(this)
 
-        presenter = SearchPresenter()
-        setHasOptionsMenu(true)
-
         recyclerView.adapter = adapter
 
         return searchFragmentBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter = SearchPresenter(pillsRepository)
         searchFragmentBinding?.searchToolbar?.setNavigationOnClickListener { findNavController().navigateUp() }
         presenter.startSearching(searchFragmentBinding!!.searchView)
     }

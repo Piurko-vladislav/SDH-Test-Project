@@ -20,6 +20,7 @@ buildscript {
         rf_adapter_rxjava_version = '2.3.0'
         loggin_intercepter_version = '3.8.0'
         rx_java_version = '2.0.2'
+        dagger_version = "2.29.1"
     }
     repositories {
         google()

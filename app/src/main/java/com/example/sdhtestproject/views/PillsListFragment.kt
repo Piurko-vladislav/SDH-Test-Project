@@ -12,19 +12,32 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sdhtestproject.R
 import com.example.sdhtestproject.adapters.PillsListAdapter
+import com.example.sdhtestproject.app.MyApplication
 import com.example.sdhtestproject.contracts.PillsListContract
 import com.example.sdhtestproject.databinding.PillsListFragmentBinding
 import com.example.sdhtestproject.models.Results
 import com.example.sdhtestproject.presenters.PillsListPresenter
+import com.example.sdhtestproject.repositotys.PillsDaoRepository
+import com.example.sdhtestproject.repositotys.PillsRepository
 import com.example.sdhtestproject.utils.RequestType
+import javax.inject.Inject
 
 class PillsListFragment : Fragment(R.layout.pills_list_fragment), PillsListContract.View, PillsListAdapter.PillsAdapterListener {
+
+
+    @Inject lateinit var daoRepository: PillsDaoRepository
+    @Inject lateinit var pillsRepository: PillsRepository
 
     private lateinit var presenter : PillsListContract.Presenter
     private var pillsListFragmentBinding : PillsListFragmentBinding? = null
     private lateinit var adapter: PillsListAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MyApplication.component.inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         pillsListFragmentBinding = PillsListFragmentBinding.inflate(inflater, container, false)
@@ -33,13 +46,18 @@ class PillsListFragment : Fragment(R.layout.pills_list_fragment), PillsListContr
         recyclerView.layoutManager = layoutManager
 
         adapter = PillsListAdapter(this)
-        presenter = PillsListPresenter()
 
         initBtn()
         recyclerView.adapter = adapter
 
 
         return pillsListFragmentBinding!!.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter = PillsListPresenter(daoRepository, pillsRepository)
+
     }
 
     override fun onResume() {
